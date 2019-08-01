@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 服务降级提示
+ * 服务降级提示1
  *
  * @author yongjie.teng
  * @date 2018/10/29

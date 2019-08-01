@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Apache License
+  ~ Version 2.0, January 2004
+  ~
+  ~    Copyright 2018 北有风雪 (yongjie.teng@qq.com)
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soraka.admin.dao.MenuDAO">
+    <!--所有字段-->
+    <sql id="all_fields">
+        sys_menu.id,
+        sys_menu.name,
+        sys_menu.component,
+        sys_menu.redirect,
+        sys_menu.type,
+        sys_menu.path,
+        sys_menu.url,
+        sys_menu.method,
+        sys_menu.permission,
+        sys_menu.ico,
+        sys_menu.parent_id,
+        sys_menu.sequence,
+        sys_menu.status,
+        sys_menu.create_time,
+        sys_menu.modify_time
+    </sql>
+    <select id="get" resultType="com.soraka.common.model.domain.MenuDO" parameterType="java.lang.Long">
+        SELECT
+            <include refid="all_fields"/>
+        FROM
+            sys_menu sys_menu
+        WHERE
+            id = #{id}
+    </select>
+    <select id="findByUserId" resultType="com.soraka.common.model.domain.MenuDO" parameterType="java.lang.Long">
+        SELECT
+        <include refid="all_fields"/>
+        FROM
+        sys_menu
+        JOIN sys_role_menu um ON um.menu_id = sys_menu.id
+        JOIN sys_user_role ur ON um.role_id = ur.role_id
+        WHERE
+        ur.user_id = #{userId}
+    </select>
+    <select id="find" resultType="com.soraka.common.model.domain.MenuDO" parameterType="com.soraka.admin.model.dto.QueryParam">
+        SELECT
+        <include refid="all_fields"/>
+        FROM
+        sys_menu
+        <where>
+            <if test="queryText != null and queryText.trim() != ''">
+                OR name = #{queryText}
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                ORDER BY ${sort} ${order}
+            </when>
+            <otherwise>
+                ORDER BY sys_menu.id DESC
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            LIMIT #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="count" resultType="java.lang.Integer" parameterType="com.soraka.admin.model.dto.QueryParam">
+        SELECT COUNT(*) FROM
+        sys_menu
+        <where>
+            <if test="queryText != null and queryText.trim() != ''">
+                AND name = #{queryText}
+            </if>
+        </where>
+    </select>
+    <insert id="save" parameterType="com.soraka.common.model.domain.MenuDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_menu (
+            name,
+            type,
+            path,
+            url,
+            method,
+            permission,
+            ico,
+            parent_id,
+            sequence
+        )
+        VALUES
+        (
+            #{name},
+            #{type},
+            #{path},
+            #{url},
+            #{method},
+            #{permission},
+            #{ico},
+            #{parentId},
+            #{sequence}
+        )
+    </insert>
+    <update id="update" parameterType="com.soraka.common.model.domain.MenuDO">
+        UPDATE sys_menu
+        <set>
+            <if test="name != null">name = #{name}, </if>
+            <if test="type != null">type = #{type}, </if>
+            <if test="path != null">path = #{path}, </if>
+            <if test="url != null">url = #{url}, </if>
+            <if test="method != null">method = #{method}, </if>
+            <if test="permission != null">permission = #{permission}, </if>
+            <if test="ico != null">ico = #{ico}, </if>
+            <if test="parentId != null">parent_id = #{parentId}, </if>
+            <if test="sequence != null">sequence = #{sequence}, </if>
+            <if test="status != null">status = #{status}, </if>
+            modify_time = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM sys_menu WHERE id = #{id}
+    </delete>
+
+    <select id="getRoleMenu" resultType="com.soraka.common.model.domain.MenuDO" parameterType="java.lang.String">
+        SELECT
+            DISTINCT
+            <include refid="all_fields"/>
+        FROM
+            sys_menu
+        JOIN sys_role_menu um ON um.menu_id = sys_menu.id
+        JOIN sys_role ro ON um.role_id = ro.id
+        WHERE
+            ro.key IN
+            <foreach collection="roleKeys" item="roleKey" open="(" close=")" separator=",">
+                #{roleKey}
+            </foreach>
+    </select>
+</mapper>

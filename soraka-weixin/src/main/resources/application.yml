@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: soraka-weixin
+server:
+  port: 8004
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka/

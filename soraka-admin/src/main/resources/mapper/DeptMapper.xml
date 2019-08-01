@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Apache License
+  ~ Version 2.0, January 2004
+  ~
+  ~    Copyright 2018 北有风雪 (yongjie.teng@qq.com)
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soraka.admin.dao.DeptDAO">
+    <!--所有字段-->
+    <sql id="all_fields">
+        id,
+        name,
+        code,
+        parent_id,
+        status,
+        sequence,
+        deleted,
+        create_user,
+        modify_user,
+        create_time,
+        modify_time
+    </sql>
+    <select id="get" resultType="com.soraka.common.model.domain.DeptDO" parameterType="java.lang.Long">
+        SELECT
+            <include refid="all_fields"/>
+        FROM
+            sys_dept
+        WHERE
+            id = #{id}
+    </select>
+    <select id="find" resultType="com.soraka.common.model.domain.DeptDO" parameterType="com.soraka.admin.model.dto.QueryParam">
+        SELECT
+        <include refid="all_fields"/>
+        FROM
+        sys_dept
+        <where>
+            <if test="queryText != null and queryText.trim() != ''">
+                OR name = #{queryText}
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                ORDER BY ${sort} ${order}
+            </when>
+            <otherwise>
+                ORDER BY sys_dept.id DESC
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            LIMIT #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="count" resultType="java.lang.Integer" parameterType="com.soraka.admin.model.dto.QueryParam">
+        SELECT COUNT(*) FROM
+        sys_dept
+        <where>
+            <if test="queryText != null and queryText.trim() != ''">
+                AND name = #{queryText}
+            </if>
+        </where>
+    </select>
+    <insert id="save" parameterType="com.soraka.common.model.domain.DeptDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_dept (
+            name,
+            code,
+            parent_id,
+            sequence,
+            create_user,
+            modify_user
+        )
+        VALUES
+            (
+                #{name},
+                #{code},
+                #{parentId},
+                #{sequence},
+                #{createUser},
+                #{modifyUser}
+            )
+    </insert>
+    <update id="update" parameterType="com.soraka.common.model.domain.DeptDO">
+        UPDATE sys_dept
+        <set>
+            <if test="name != null">name = #{name}, </if>
+            <if test="code != null">code = #{code}, </if>
+            <if test="parentId != null">parent_id = #{parentId}, </if>
+            <if test="status != null">status = #{status}, </if>
+            <if test="sequence != null">sequence = #{sequence}, </if>
+            <if test="modifyUser != null">modify_user = #{modifyUser}, </if>
+            modify_time = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM sys_dept WHERE id = #{id}
+    </delete>
+</mapper>

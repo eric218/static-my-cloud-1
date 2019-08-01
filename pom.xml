@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Apache License
+  ~ Version 2.0, January 2004
+  ~
+  ~    Copyright 2018 北有风雪 (yongjie.teng@qq.com)
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>
+        Soraka是一个基于Spring Cloud的基础微服务开发框架，有高效率，低封装的特点，非常适合学习和中小企业直接作为开发框架使用。
+        使用Spring Security OAuth，Spring Boot，Spring Security OAuth，Eureka，Zuul等技术，前端使用vue进行开发。
+    </description>
+
+    <!--基本信息-->
+    <groupId>com.soraka</groupId>
+    <artifactId>soraka</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>soraka-discovery</module>
+        <module>soraka-gateway</module>
+        <module>soraka-admin</module>
+        <module>soraka-weixin</module>
+        <module>soraka-auth</module>
+        <module>soraka-common</module>
+    </modules>
+
+    <developers>
+        <developer>
+            <name>北有风雪</name>
+            <url>https://gitee.com/beiyoufx/soraka</url>
+        </developer>
+    </developers>
+
+    <!--属性-->
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- 文件拷贝时的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <spring-boot.version>2.0.6.RELEASE</spring-boot.version>
+        <mybatis.starter.version>1.3.2</mybatis.starter.version>
+        <lombok.version>1.16.20</lombok.version>
+        <swagger.version>2.7.0</swagger.version>
+        <hibernate-validator.version>5.3.6.Final</hibernate-validator.version>
+    </properties>
+
+    <!--依赖-->
+    <dependencies>
+    </dependencies>
+    <!--依赖-->
+    <dependencyManagement>
+        <dependencies>
+            <!--spring-cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring-boot-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--数据库-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.starter.version}</version>
+            </dependency>
+            <!--数据校验-->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <!--Lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <!--微服务文档-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!--构建-->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <!--仓库-->
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

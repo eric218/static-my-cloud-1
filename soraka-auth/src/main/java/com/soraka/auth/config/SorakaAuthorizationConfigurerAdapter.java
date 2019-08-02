@@ -127,4 +127,11 @@ public class SorakaAuthorizationConfigurerAdapter extends AuthorizationServerCon
         defaultTokenServices.setTokenEnhancer(tokenEnhancerChain);
         return defaultTokenServices;
     }
+
+    public static void main(String[] args) {
+        String p = new BCryptPasswordEncoder().encode("123456");
+        boolean f = new BCryptPasswordEncoder().matches("soraka",p);
+        System.out.println(p);
+        System.out.println(f);
+    }
 }

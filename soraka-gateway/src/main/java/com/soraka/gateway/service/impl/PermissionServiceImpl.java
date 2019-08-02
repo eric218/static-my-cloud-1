@@ -23,6 +23,8 @@ import com.soraka.common.constant.Constants;
 import com.soraka.common.model.domain.MenuDO;
 import com.soraka.gateway.service.PermissionService;
 import com.soraka.gateway.service.feign.MenuService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -58,6 +61,7 @@ public class PermissionServiceImpl implements PermissionService {
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         boolean hasPermissionFalg = false;
         log.info("开始走hasPermission,request:{}",request.getRequestURI());
+        printToken(request);
         Object principal = authentication.getPrincipal();
         List<SimpleGrantedAuthority> grantedAuthorityList = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
 
@@ -90,5 +94,14 @@ public class PermissionServiceImpl implements PermissionService {
         }
         log.info("hasPermission 结束 鉴权:{}",hasPermissionFalg);
         return hasPermissionFalg;
+    }
+
+    private void printToken(HttpServletRequest request){
+        String authorization = request.getHeader(Constants.TOKEN_HEADER);
+        String token = StringUtils.substringAfter(authorization, Constants.TOKEN_BEARER);
+        System.out.println("token:"+token);
+        String key = Base64.getEncoder().encodeToString(Constants.JWT_SIGN_KEY.getBytes());
+        Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+        System.out.println("claims:"+claims.toString());
     }
 }

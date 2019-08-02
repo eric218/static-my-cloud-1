@@ -43,7 +43,7 @@ public class SorakaSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
      * 登录地址为 "/login"，登录成功默认跳转到页面 "/user"
      * 退出登录的地址为 "/logout"，退出成功后跳转到页面 "/login"
      * 默认启用 CSRF
-     * antMatchers 不需要用token鉴权的再此列出
+     * antMatchers 不需要用token鉴权的再此列出，SorakaResourceConfigurerAdapter也要放开鉴权，例如/mp/hello
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {

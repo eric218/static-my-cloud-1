@@ -1,49 +1,4 @@
-<p align="center"><img width="220" src="soraka-wiki/images/logo.png"></p>
 
-<p align="center">
-  <a href="https://github.com/vuejs/vue">
-    <img src="https://img.shields.io/badge/vue-2.5.17-brightgreen.svg" alt="vue">
-  </a>
-  <a href="https://github.com/ElemeFE/element">
-    <img src="https://img.shields.io/badge/element--ui-2.4.6-brightgreen.svg" alt="element-ui">
-  </a>
-  <a href="https://spring.io/projects/spring-boot">
-    <img src="https://img.shields.io/badge/spring--boot-2.0.6.RELEASE-blue.svg" alt="spring-boot">
-  </a>
-  <a href="https://spring.io/projects/spring-cloud">
-    <img src="https://img.shields.io/badge/spring--cloud-Finchley.SR2-blue.svg" alt="spring-cloud">
-  </a>
-  <a href="https://gitee.com/beiyoufx/soraka">
-    <img src="https://img.shields.io/badge/license-Apache%202.0-green.svg" alt="license">
-  </a>
-</p>
-
-
-
-# Soraka
-
-- 前后端完全分离，基于最新稳定版本`Spring Boot 2.0.6.RELEASE`
-- 基于网关的统一权限管理，更高效更方便
-- 基于`Spring Security OAuth`实现按钮级细粒度权限控制
-- `Apache LICENSE 2.0`，完全开源
-
-**交流QQ群：808305454**
-
-# 项目介绍
-
-Soraka一个基于Spring Cloud的基础微服务开发框架，有高效率，低封装的特点，非常适合学习和中小企业直接作为开发框架使用。
-
-项目使用Maven进行管理，结构如下：
-
-``` lua
-soraka
-├── soraka-admin -- 管理模块（端口：8003）
-├── soraka-auth -- 权限模块（端口：8005）
-├── soraka-common -- 共用模块
-├── soraka-discovery -- 服务中心（端口：8001）
-├── soraka-gateway -- ZUUL网关（端口：80）
-├── soraka-weixin -- 微信模块（待实现 端口：8004）
-```
 
 前端项目链接：https://gitee.com/beiyoufx/soraka-view
 
@@ -83,22 +38,3 @@ soraka
 | vue-router         | 3.0.1  | 前端路由     | https://github.com/vuejs/vue-router             |
 | vue-admin-template |        | 后台模板     | https://github.com/PanJiaChen/vue-element-admin |
 
-# 文档
-
-1. [快速开始](soraka-wiki/快速开始.md)
-2. [常见问题](soraka-wiki/常见问题.md)
-
-# 截图
-
-![Soraka演示](https://gitee.com/beiyoufx/soraka-view/raw/master/demo.gif)
-
-# 关注我们
-
-作者深知一个人的精力是有限的，如果觉得项目对您有帮助，欢迎fork和star，加入QQ群一起维护Soraka吧！
-**交流QQ群：808305454**
-
-公众号 **Java实践笔记**
-
-分享Java开发中常用的技术，分享软件开发的新技术，分享业内相关的解决方案和互联网资讯，让自己做一个紧跟时代潮流的程序猿~
-
-![img](https://gitee.com/beiyoufx/soraka-view/raw/master/javanoteqr.jpg)

@@ -69,6 +69,7 @@ public class BaseController {
         String authorization = request.getHeader(Constants.TOKEN_HEADER);
         String token = StringUtils.substringAfter(authorization, Constants.TOKEN_BEARER);
         String key = Base64.getEncoder().encodeToString(Constants.JWT_SIGN_KEY.getBytes());
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+        return claims;
     }
 }

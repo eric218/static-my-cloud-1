@@ -22,6 +22,7 @@ package com.soraka.auth.userdetails;
 import com.soraka.common.constant.Constants;
 import com.soraka.common.model.domain.RoleDO;
 import com.soraka.common.model.domain.UserDO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +37,7 @@ import java.util.List;
  * @date 2018/10/19
  * @package com.soraka.auth.userdetails
  */
+@Slf4j
 public class UserDetailsImpl implements UserDetails {
     private Long userId;
     private String username;
@@ -44,6 +46,7 @@ public class UserDetailsImpl implements UserDetails {
     List<RoleDO> roles;
 
     public UserDetailsImpl(UserDO userDO, List<RoleDO> roles) {
+        log.info("Auth UserDetails:A");
         this.userId = userDO.getId();
         this.username = userDO.getUsername();
         this.password = userDO.getPassword();
